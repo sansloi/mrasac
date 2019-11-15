@@ -1,0 +1,95 @@
+\documentclass{article}
+\usepackage[utf8]{inputenc}
+\usepackage{amsmath}
+
+
+\title{Model Reference Adaptive Satellite Attitude Control - MRASAC}
+\author{Julio
+B. Figueroa}
+\date{November 2019}
+
+\begin{document}
+
+\maketitle
+\section{Abstract}
+\section{Table of Contents}
+\section{Introduction}
+Artificial satellites are distinguished from natural satellites in that they have been intentionally placed in orbit of something.
+It could be an asteroid such as 433 Eros or our very own planet.
+With a satellite, two types of position controllers could exist.
+Altitude control, which is the height of the satellite to what it's orbiting, and attitude control, which is the satellite's predisposition to that which it orbits.
+Here that predisposition is measured via three states formally known as pitch, yaw, and roll (
+$\phi$, $\theta$, $\psi$.) Given a circular orbit, the linearized attitude dynamics can be represented by:
+\begin{equation}
+I_{x} \ddot{\phi} +4(I_{y}-I_{z})\omega^{2}_{0}\phi+(I_{y}-I_{z}-I_{x})\omega_{0}\dot{\phi} = u_{i}
+\end{equation}
+
+\begin{equation}
+I_{y}\ddot{\omega}+3\omega^{2}_{0}(I_{x}-I_{z})\theta = u_{2}
+\end{equation}
+
+\begin{equation}
+I_{z}\ddot{\psi}+(I_{y}-I_{x})\omega^{2}_{0}\psi + (I_{x} + I_{z} - I_{y})\omega_{0}\dot{\phi}
+\end{equation}
+
+The observation here is that the pitch angle $\theta$ is decoupled from the rest of the system.
+A similar satellite orbiting 344 Eros would have altered dynamics given by
+
+Attitude control is important because the instrumentation carried by a satellite usually works if it's being pointed at a nice location. Ideally, one would have their instruments pointing perpendicular to the surface which they are tracking or receiving commands from.
+
+Solutions to these problems exist, but we will attempt to solve them for systems where mass and moments of inertia are varying. Furthermore, because pragmatic solutions exist only in the digital world, we will also attempt to do this by discretization of our system.
+
+For satellite orbit of an asteroid, work has been done by K. D. Kumar.
+Their attitude motion of a satellite is modeled in section 4.2 of this report.
+
+\section{Method}
+\subsection{Linear Earth Model}
+Take equations 1, 2, and 3 above.
+The satellite moments of inertia are $I_{y}, I_{x}, I_{z} = (20, 18, 15) [kg.m^{2}]$, and the trust inputs are $u = (u_{1},u_{2},u_{3})$. Low Earth orbit or LOW cange range from 160 km up to 1000 km above the Earth surface. Satellites in a circular orbit can travel at a speed of around 7.8 km per second. A period of about 90 minutes exists at this velocity. Assuming the altitude above earth is $R_h = 400 [km]$, and that the radius of a circular Earth is $R_{E} = 6,371 [km]$, the orbital rate $\omega_{0}$ is calculated as
+\begin{equation}
+\omega_{0} =\sqrt{\frac{\mu}{{R_{h}+R_{E}}}
+
+\end{equation}
+
+where $\mu = GM_{e}$, G = universal gravitational constant, and $M_{e}$ is the mass of the Earth. Thus $\mu$ can be taken to be
+
+\begin{equation}
+\mu = GM_{e} = 3.986004418x10^{5} [k.m^{3}/s^{2}]
+\end{equation}
+
+\subsubsection{Controllability and Observability}
+\subsection{non-linear Earth Model}
+\subsubsection{Controllability and Observability}
+
+\subsection{non-linear 344 Eros Model}
+\subsubsection{Controllability and Observability}
+
+\subsubsection{Controllability and Observability}
+
+\subsection{Discrete 344 Eros Model}
+\subsubsection{Controllability and Observability}
+
+\subsubsection{Controllability and Observability}
+
+
+\subsubsection{Controllability and Observability}
+
+\section{Results}
+
+\subsection{Data}
+\subsection{graphs}
+\subsubsection{limitations}
+
+\section{Conclusion}
+\section{Code}
+
+
+\section{References}
+[1] Dr. S. Singh, Attitude Control of Earth-Orbiting  \\
+
+[2] K.D. Kumar, Acta Mechanica, Attitude dynamics and control of satellites orbiting rotating asteroids. \\
+
+[2]Chi Tsong Chen, Linear System Theory and Design \\
+
+[3]Sun, Robust Adaptive Controller\\
+\end{document}
