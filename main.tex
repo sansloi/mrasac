@@ -2,34 +2,64 @@
 \usepackage[utf8]{inputenc}
 \usepackage{amsmath}
 
+% for code samples in the appendix
+\usepackage{listings}
+\usepackage{color}
 
-\title{Model Reference Adaptive Satellite Attitude Control - MRASAC}
-\author{Julio
-B. Figueroa}
-\date{November 2019}
+\definecolor{dkgreen}{rgb}{0,0.6,0}
+\definecolor{gray}{rgb}{0.5,0.5,0.5}
+\definecolor{mauve}{rgb}{0.58,0,0.82}
+
+\lstset{frame=tb,
+  language=Java,
+  aboveskip=3mm,
+  belowskip=3mm,
+  showstringspaces=false,
+  columns=flexible,
+  basicstyle={\small\ttfamily},
+  numbers=none,
+  numberstyle=\tiny\color{gray},
+  keywordstyle=\color{blue},
+  commentstyle=\color{dkgreen},
+  stringstyle=\color{mauve},
+  breaklines=true,
+  breakatwhitespace=true,
+  tabsize=3
+}
+
+
+
+
+\title{Model Reference Adaptive Satellite Attitude Control, or How To Control a Satellite When it Gives You Attitude}
+\author{J.Bryan Figueroa}
+\date{December 2019}
 
 \begin{document}
 
 \maketitle
 \section{Abstract}
+Presented in this term paper is a derivation of state-space representation for attitude control of a satellite in low Earth orbit.
+We begin with simple pitch consideration, and then we consider the scenario where the inertial terms makes the dynamics non-homogenious.
 \section{Table of Contents}
 \section{Introduction}
 Artificial satellites are distinguished from natural satellites in that they have been intentionally placed in orbit of something.
 It could be an asteroid such as 433 Eros or our very own planet.
 With a satellite, two types of position controllers could exist.
 Altitude control, which is the height of the satellite to what it's orbiting, and attitude control, which is the satellite's predisposition to that which it orbits.
-Here that predisposition is measured via three states formally known as pitch, yaw, and roll (
-$\phi$, $\theta$, $\psi$.) Given a circular orbit, the linearized attitude dynamics can be represented by:
+Here, we'll look at attitude control of three states of rotation by the Euler angles.
+Those three states as pitch, yaw, and roll ($\phi$, $\theta$, $\psi$).
+Given a circular orbit, the linearized attitude dynamics can be represented by:
+
 \begin{equation}
 I_{x} \ddot{\phi} +4(I_{y}-I_{z})\omega^{2}_{0}\phi+(I_{y}-I_{z}-I_{x})\omega_{0}\dot{\phi} = u_{i}
 \end{equation}
 
 \begin{equation}
-I_{y}\ddot{\omega}+3\omega^{2}_{0}(I_{x}-I_{z})\theta = u_{2}
+I_{y}\ddot{\theta}+3\omega^{2}_{0}(I_{x}-I_{z})\theta = u_{2}
 \end{equation}
 
 \begin{equation}
-I_{z}\ddot{\psi}+(I_{y}-I_{x})\omega^{2}_{0}\psi + (I_{x} + I_{z} - I_{y})\omega_{0}\dot{\phi}
+I_{z}\ddot{\psi}+(I_{y}-I_{x})\omega^{2}_{0}\psi + (I_{x} + I_{z} - I_{y})\omega_{0}\dot{\phi} = u_3
 \end{equation}
 
 The observation here is that the pitch angle $\theta$ is decoupled from the rest of the system.
@@ -42,36 +72,131 @@ Solutions to these problems exist, but we will attempt to solve them for systems
 For satellite orbit of an asteroid, work has been done by K. D. Kumar.
 Their attitude motion of a satellite is modeled in section 4.2 of this report.
 
-\section{Method}
-\subsection{Linear Earth Model}
+\section{Mathematical Modeling}
+\subsection{System Parameters}
 Take equations 1, 2, and 3 above.
 The satellite moments of inertia are $I_{y}, I_{x}, I_{z} = (20, 18, 15) [kg.m^{2}]$, and the trust inputs are $u = (u_{1},u_{2},u_{3})$. Low Earth orbit or LOW cange range from 160 km up to 1000 km above the Earth surface. Satellites in a circular orbit can travel at a speed of around 7.8 km per second. A period of about 90 minutes exists at this velocity. Assuming the altitude above earth is $R_h = 400 [km]$, and that the radius of a circular Earth is $R_{E} = 6,371 [km]$, the orbital rate $\omega_{0}$ is calculated as
 \begin{equation}
 \omega_{0} =\sqrt{\frac{\mu}{{R_{h}+R_{E}}}
-
 \end{equation}
 
 where $\mu = GM_{e}$, G = universal gravitational constant, and $M_{e}$ is the mass of the Earth. Thus $\mu$ can be taken to be
 
 \begin{equation}
-\mu = GM_{e} = 3.986004418x10^{5} [k.m^{3}/s^{2}]
+\mu = GM_{e} = 3.986004418x10^{5} [km^{3}/sec^{2}]
+\end{equation}
+Here, $\mu$ is in units of kilometers and seconds.
+Had it been in units of meters and seconds, we would see the more common
+
+\begin{equation}
+\mu = 3.986004418x10^{14} [m^{3}/sec^{2}]
 \end{equation}
 
-\subsubsection{Controllability and Observability}
-\subsection{non-linear Earth Model}
-\subsubsection{Controllability and Observability}
+\subsection{Pitch Dynamics}
+Consider equation 2 above - rewritten here for the reader's comfort
 
-\subsection{non-linear 344 Eros Model}
-\subsubsection{Controllability and Observability}
+\begin{equation}
+I_{y}\ddot{\theta}+3\omega^{2}_{0}(I_{x}-I_{z})\theta = u_{2}
+\end{equation}
 
-\subsubsection{Controllability and Observability}
+Note that the only rotational term here is $\theta$, the pitch state of our satellite.
+Thus, it is implied that the pitch dynamics will be decoupled from the yaw and roll dynmaics of the satellite.
+Using subsitution
 
-\subsection{Discrete 344 Eros Model}
-\subsubsection{Controllability and Observability}
+\begin{equation}
+  x_1 = \theta,
+  \dot{x_1} = \dot{\theta},
+  x_2 = \dot{x_1},
+  \dot{x_2} = \ddot{\theta}
+\end{equation}
 
-\subsubsection{Controllability and Observability}
+Now equation 7 can be rewritten as
+
+\begin{equation}
+I_{y}\dot{x_2}+3\omega^{2}_{0}(I_{x}-I_{z})x_1 = u_{2}
+\end{equation}
+
+isolating for $\dot{x_2}$ yields
+
+\begin{equation}
+\dot{x_2} = \frac{-3\omega^{2}_{0}(I_{x} + I_{z})}{I_y}x_1 + \frac{1}{I_y}u_{2}
+\end{equation}
 
 
+From equation 10 along with the variable subtiutions created above, we can convert this into a state-space representation
+
+\begin{equation}
+  \begin{bmatrix}
+  \dot{x_1}  \\
+  \dot{x_2}
+\end{bmatrix}
+  =
+  \begin{bmatrix}
+  0 & 1 \\
+  \frac{-3\omega^{2}_{0}(I_{x} + I_{z})}{I_y} & 0
+  \end{bmatrix}
+  \begin{bmatrix}
+  x_1  \\
+  x_2
+  \end{bmatrix}
+  +
+  \begin{bmatrix}
+  1 \\
+  -\frac{1}{I_y}
+  \end{bmatrix}
+  \begin{bmatrix}
+  u_2 \\
+  \end{bmatrix}
+
+\end{equation}
+
+The form of this equation matches that of
+\begin{equation}
+  \dot{X} = A X + B U
+\end{equation}
+
+where, $A \in R^2,B \in R^2, X \in R^2,$ and $U \in R^1$.
+Thus, U begin in a 1x1 matrix is a scalar quanity.
+The cross product of B and U create a 2x1 matrix which matches the dimensions of the other term in equation 11.
+The x subtitute variable used here has no relation to subscripts used in the inertia parameters.
+\subsubsection{Pitch Calculations}
+With the values stated about the system parameters in section 4.1 placed into the dynamics in equatoin 11, we get the systems
+
+\begin{equation}
+  \begin{bmatrix}
+  \dot{x_1}  \\
+  \dot{x_2}
+\end{bmatrix}
+  =
+  \begin{bmatrix}
+  0 & 1.000000000000000 \\
+  -0.000001070035259 & 0
+ \end{bmatrix}
+  \begin{bmatrix}
+  x_1  \\
+  x_2
+  \end{bmatrix}
+  +
+  \begin{bmatrix}
+   1.000000000000000 \\
+  -0.055555555555556
+  \end{bmatrix}
+  \begin{bmatrix}
+  u_2 \\
+  \end{bmatrix}
+
+\end{equation}
+
+The .... of this system are shown in the appendeix in the script pitchConsiderations.m
+The parameters within the A matrix differ by several orders of magnitude, and we question the stiffness of this matrix.
+The numerical solver ode45() will be tried.
+\subsection{Controllability and Observability}
+X theorem sates that the rank of the controllability matrix determines ...
+
+The Y observaility matrix given by ...
+
+\section{Full State Dynamics}
+In this section we will follow the same derivation in section 4.2 for the coupled equations 1 and 3.
 \subsubsection{Controllability and Observability}
 
 \section{Results}
@@ -83,6 +208,61 @@ where $\mu = GM_{e}$, G = universal gravitational constant, and $M_{e}$ is the m
 \section{Conclusion}
 \section{Code}
 
+\section{Appendix}
+\subsection{PitchConsideratoins.m}
+
+\begin{lstlisting}
+//pitchConsiderations.m
+%J. Bryan Figueroa
+clc, clear, format long
+%% constant parameters
+% moments of inertia of the spacecraft
+I_x = 20    % [kg*m^2]
+I_y = 18
+I_z = 15
+
+% vector of control input torque, limit to abs <= 1 [N*m]
+syms u1 u2 u3
+u = [u1; u2; u3] % [N*m]
+
+% orbit and earth measurement values
+R_h = 400   % [km]
+% take something inbetween long and short distances from the center of the
+% Earth
+R_E = 6371  % [km]
+
+% geocentric gravitational constant
+% https://www.wolframalpha.com/input/?i=geocentric+gravitational+constant
+% becaause we're taking mu in terms of [km] and not [m]
+% mu = 3.986004418*10^14   % [m^3 / sec^2]
+mu = 3.986004418*10^5    % [km^3 / sec^2]
+
+% angular velocity
+w_o = (mu / ((R_h + R_E)^3))^0.5
+% turns out to be 0.0011
+
+%% equation 2 only
+% state-space equation using only the pitch dynamics decoupled from
+% everything else
+
+a21 = -3*(w_o^2)*(I_x-I_z)/I_y
+%A = [0, 1; -3*(w_o^2)*(I_x-I_z)/I_y, 0]
+% keep format long or else we'll see too many 0's
+A = [0, 1; a21, 0]
+
+B = [1; -1/I_y]
+
+u = 1
+
+%% now plot the solution to dot_X = AX + BU
+% Y = C X, C = ones(n), n = 2
+% but first assume a zero-input design, so U = 0
+% so.. plot the solution to dot_X = AX
+u = 0
+
+%ode1 = diff(
+
+\end{lstlisting}
 
 \section{References}
 [1] Dr. S. Singh, Attitude Control of Earth-Orbiting  \\
