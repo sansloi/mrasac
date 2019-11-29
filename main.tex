@@ -28,8 +28,6 @@
 }
 
 
-
-
 \title{Model Reference Adaptive Satellite Attitude Control, or How To Control a Satellite When it Gives You Attitude}
 \author{J.Bryan Figueroa}
 \date{December 2019}
@@ -196,18 +194,101 @@ X theorem sates that the rank of the controllability matrix determines ...
 The Y observaility matrix given by ...
 
 \section{Full State Dynamics}
-In this section we will follow the same derivation in section 4.2 for the coupled equations 1 and 3.
+Following the same process we used in section 4.2 for the pitch dynamics, we can isolate the roll and yaw states into canoical form.
+Because these are second derivative equations, we'll need two states for each additional ODE for a total of six states $x_1$ through $x_2$
+
+Looking back to equations 1 through 3 of our original system, let's make the following subtitutions
+\begin{equation}
+  \begin{split}
+  x_1 = \psi, \dot{x_1} = \dot{\psi} \\
+  x_2 = \dot{x_1}, \dot{x_2} = \ddot{x_1} = \ddot{\psi} \\
+  x_3 = \theta, \dot{x_3} = \dot{\theta}\\
+  x_4 = \dot{x_2}, \dot{x_4} = \ddot{x_3} = \ddot{\theta} \\
+  x_5 = \phi, \dot{x_5} = \dot{\phi} \\
+  x_6 = \dot{x_5}, \dot{x_6} = \ddot{x_5} = \ddot{\phi}
+  \end{split}
+\end{equation}
+
+Paralleling the derivations we did in section 4.2, come up with
+
+\begin{equation}
+  \dot{x_2} = \frac{-4(I_y - I_z)\omega^{2}_{o}}{I_x} x_1 -
+              \frac{(I_y - I_z - I_x)\omega_o}{I_x} x_6 +
+              \frac{1}{I_x} u_1
+\end{equation}
+
+\begin{equation}
+  \dot{x_4} = \frac{-3\omega^{2}_{0}(I_{x} + I_{z})}{I_y} x_3 +
+              \frac{1}{I_y} u_2
+\end{equation}
+
+\begin{equation}
+  \dot{x_6} = \frac{-(I_y - I_x)\omega^2}{I_z} x_5 -
+             \frac{(I_x + I_z - I_y) \omega_o}{I_z} x_2 +
+             \frac{1}{I_z} u_3
+\end{equation}
+
+Note that equation 16 represents equation 10, but with a change of subscripts.
+With the information from equations 14 through 17 we can now build the state-space representation.
+Pay particular attention to the B matrix.
+
+\begin{equation}
+  %\begin{multline}
+    \begin{bmatrix}
+    \dot{x_1}  \\
+    \dot{x_2}  \\
+    \dot{x_3}  \\
+    \dot{x_4}  \\
+    \dot{x_5}  \\
+    \dot{x_6}  \\
+  \end{bmatrix}
+  =
+  \begin{bmatrix}
+    0 & 1  & 0 & 0 & 0 & 0 \\
+    \frac{-4(I_y - I_z)}{I_x} \omega^{2}_{o} & 0 & 0 & 0 & 0 & \frac{-(I_y-I_z-I_x)}{I_x} \omega_o \\
+    0 & 0  & 0 & 1 & 0 & 0 \\
+    0 & 0 & \frac{-3\omega^{2}_{0}(I_{x} + I_{z})}{I_y} & 0 & 0 & 0 \\i
+    0 & 0  & 0 & 0 & 0 & 1 \\
+    0 & 0 \frac{-(I_x + I_z - I_y)}{I_z} \omega_o & 0 & 0 & \frac{-(I_y - I_x)}{I_z} \omega^{2}_{o} & 0
+    \end{bmatrix}
+    \begin{bmatrix}
+      {x_1}  \\
+      {x_2}  \\
+      {x_3}  \\
+      {x_4}  \\
+      {x_5}  \\
+      {x_6}
+    \end{bmatrix}
+  +
+    \begin{bmatrix}
+        0 \\
+        \frac{1}{I_y}\\
+        0 \\
+        \frac{1}{I_x}\\
+        0\\
+        \frac{1}{I_z}
+    \end{bmatrix}
+    \begin{bmatrix}
+      0 \\
+      u_1\\
+      0 \\
+      u_2\\
+      0\\
+      u_3
+    \end{bmatrix}^T
+  %$\end{multline}
+\end{equation}
+Where the U matrix is transposed
+
 \subsubsection{Controllability and Observability}
 
 \section{Results}
 
 \subsection{Data}
 \subsection{graphs}
-\subsubsection{limitations}
 
 \section{Conclusion}
-\section{Code}
-
+\subsection{limitations}
 \section{Appendix}
 \subsection{PitchConsideratoins.m}
 
