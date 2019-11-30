@@ -4,8 +4,17 @@
 
 % for code samples in the appendix
 \usepackage{listings}
-\usepackage{color}
 
+\usepackage[english]{babel}
+\usepackage{comment}
+\usepackage[
+backend=biber,
+style=alphabetic,
+sorting=ynt
+]{biblatex}
+\addbibresource{bibliograph.bib}
+
+\usepackage{color}
 \definecolor{dkgreen}{rgb}{0,0.6,0}
 \definecolor{gray}{rgb}{0.5,0.5,0.5}
 \definecolor{mauve}{rgb}{0.58,0,0.82}
@@ -28,17 +37,20 @@
 }
 
 
-\title{Model Reference Adaptive Satellite Attitude Control, or How To Control a Satellite When it Gives You Attitude}
+\title{Model Reference Adaptive Control for Satellite Attitude, or How To Control a Satellite When it Gives You Attitude}
 \author{J.Bryan Figueroa}
 \date{December 2019}
 
 \begin{document}
 
 \maketitle
+
 \section{Abstract}
 Presented in this term paper is a derivation of state-space representation for attitude control of a satellite in low Earth orbit.
 We begin with simple pitch consideration, and then we consider the scenario where the inertial terms makes the dynamics non-homogenious.
+
 \section{Table of Contents}
+
 \section{Introduction}
 Artificial satellites are distinguished from natural satellites in that they have been intentionally placed in orbit of something.
 It could be an asteroid such as 433 Eros or our very own planet.
@@ -346,11 +358,13 @@ u = 0
 \end{lstlisting}
 
 \section{References}
-[1] Dr. S. Singh, Attitude Control of Earth-Orbiting  \\
+\cite{ruiter} test
+\cite{dirac} test
+\cite{Markley} test
+\cite{einstein} test
+\cite{knuth-fa} test
+\medskip
+\printbibliography
 
-[2] K.D. Kumar, Acta Mechanica, Attitude dynamics and control of satellites orbiting rotating asteroids. \\
 
-[2]Chi Tsong Chen, Linear System Theory and Design \\
-
-[3]Sun, Robust Adaptive Controller\\
 \end{document}
