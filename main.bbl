@@ -105,35 +105,6 @@
       \field{year}{1981}
       \keyw{physics}
     \endentry
-    \entry{Ruiter}{book}{}
-      \name{author}{1}{}{%
-        {{hash=203374864902fe3688e0961341b75737}{%
-           family={Anthon\bibnamedelimb H.J.\bibnamedelimi De\bibnamedelima Ruiter},
-           familyi={A\bibinitperiod\bibinitdelim H\bibinitperiod\bibinitdelim D\bibinitperiod\bibinitdelim R\bibinitperiod},
-           given={James\bibnamedelimb R.\bibnamedelimi Forbes},
-           giveni={J\bibinitperiod\bibinitdelim R\bibinitperiod\bibinitdelim F\bibinitperiod},
-           suffix={Christopher\bibnamedelimb J.\bibnamedelimi Damaren},
-           suffixi={C\bibinitperiod\bibinitdelim J\bibinitperiod\bibinitdelim D\bibinitperiod}}}%
-      }
-      \list{publisher}{1}{%
-        {Wiley}%
-      }
-      \strng{namehash}{203374864902fe3688e0961341b75737}
-      \strng{fullhash}{203374864902fe3688e0961341b75737}
-      \strng{bibnamehash}{203374864902fe3688e0961341b75737}
-      \strng{authorbibnamehash}{203374864902fe3688e0961341b75737}
-      \strng{authornamehash}{203374864902fe3688e0961341b75737}
-      \strng{authorfullhash}{203374864902fe3688e0961341b75737}
-      \field{labelalpha}{Ant13}
-      \field{sortinit}{2}
-      \field{sortinithash}{ed39bb39cf854d5250e95b1c1f94f4ed}
-      \field{labelnamesource}{author}
-      \field{labeltitlesource}{title}
-      \field{isbn}{9781118342367}
-      \field{title}{Spacecraft Dynamics and Control: An Introduction}
-      \field{year}{2013}
-      \keyw{Spacecraft Dynamics and Control}
-    \endentry
     \entry{Markley}{book}{}
       \name{author}{1}{}{%
         {{hash=1fef217c2ef98af979c7a5e9224a9d6a}{%
@@ -163,6 +134,7 @@
       \keyw{physics}
     \endentry
   \enddatalist
+  \missing{ruiter}
 \endrefsection
 \endinput
 

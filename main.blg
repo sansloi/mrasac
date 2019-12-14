@@ -1,15 +1,18 @@
 [1] Config.pm:304> INFO - This is Biber 2.12
 [1] Config.pm:307> INFO - Logfile is 'main.blg'
-[36] biber:315> INFO - === Sat Nov 30, 2019, 04:02:18
-[58] Biber.pm:371> INFO - Reading 'main.bcf'
-[142] Biber.pm:889> INFO - Found 5 citekeys in bib section 0
-[158] Biber.pm:4093> INFO - Processing section 0
-[170] Biber.pm:4254> INFO - Looking for bibtex format file 'bibliograph.bib' for section 0
-[171] bibtex.pm:1512> INFO - LaTeX decoding ...
+[33] biber:315> INFO - === Fri Dec 13, 2019, 22:35:57
+[59] Biber.pm:371> INFO - Reading 'main.bcf'
+[138] Biber.pm:889> INFO - Found 5 citekeys in bib section 0
+[156] Biber.pm:4093> INFO - Processing section 0
+[169] Biber.pm:4254> INFO - Looking for bibtex format file 'bibliograph.bib' for section 0
+[170] bibtex.pm:1512> INFO - LaTeX decoding ...
 [181] bibtex.pm:1329> INFO - Found BibTeX data source 'bibliograph.bib'
-[237] UCollate.pm:68> INFO - Overriding locale 'en-US' defaults 'variable = shifted' with 'variable = non-ignorable'
-[237] UCollate.pm:68> INFO - Overriding locale 'en-US' defaults 'normalization = NFD' with 'normalization = prenormalized'
-[237] Biber.pm:3921> INFO - Sorting list 'ynt/global//global/global' of type 'entry' with template 'ynt' and locale 'en-US'
-[237] Biber.pm:3927> INFO - No sort tailoring available for locale 'en-US'
-[244] bbl.pm:636> INFO - Writing 'main.bbl' with encoding 'UTF-8'
-[246] bbl.pm:739> INFO - Output to main.bbl
+[182] Utils.pm:193> WARN - Possible typo (case mismatch) between citation and datasource keys: 'ruiter' and 'Ruiter' in file 'bibliograph.bib'
+[236] Utils.pm:193> WARN - I didn't find a database entry for 'ruiter' (section 0)
+[253] UCollate.pm:68> INFO - Overriding locale 'en-US' defaults 'variable = shifted' with 'variable = non-ignorable'
+[254] UCollate.pm:68> INFO - Overriding locale 'en-US' defaults 'normalization = NFD' with 'normalization = prenormalized'
+[254] Biber.pm:3921> INFO - Sorting list 'ynt/global//global/global' of type 'entry' with template 'ynt' and locale 'en-US'
+[254] Biber.pm:3927> INFO - No sort tailoring available for locale 'en-US'
+[263] bbl.pm:636> INFO - Writing 'main.bbl' with encoding 'UTF-8'
+[265] bbl.pm:739> INFO - Output to main.bbl
+[265] Biber.pm:110> INFO - WARNINGS: 2
