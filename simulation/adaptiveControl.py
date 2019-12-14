@@ -17,10 +17,10 @@ from numpy import sin
 # adaptive gain
 gamma = 2
 
-#funciton
+
 def model(t, X, params):
 
-    y, ym, ar_cap, ay_cap = X
+    y, ym, ar_hat, ay_hat = X
 
     # this is to run multiple systems with the same modelFunction()
     # just add another set of reference signals
@@ -29,28 +29,30 @@ def model(t, X, params):
     else:
         r = 4
 
-
     e = y - ym                  # signal error
-    u = ar_cap*r + ay_cap*y     # control law
+    u = ar_hat*r + ay_hat*y     # control law
 
     ydot = y + 3*u
-    ymdot = -4*ym +4*r
+    ymdot = -4*ym + 4*r
 
-    ar_cap_dot = -gamma*e*r
-    ay_cap_dot = -gamma*e*y
+    ar_hat_dot = -gamma*e*r
+    ay_hat_dot = -gamma*e*y
 
-    return [ydot, ymdot, ar_cap_dot, ay_cap_dot]
+    return [ydot, ymdot, ar_hat_dot, ay_hat_dot]
+
 
 def main(option):
 
     X0 = [0, 0, 0, 0]   # initial conditions
     t0 = 0              # time initial
     t1 = 6              # t final
-    dt = 0.01       # steps
+    dt = 0.01           # steps
 
+    # select "backward differentiation formula"
     r = ode(model).set_integrator('vode', method='bdf')
     r.set_initial_value(X0, t0).set_f_params(option)
 
+    # consider making this a function of above time parameters
     x = np.zeros((601, 4))
     t = []
     i = 0
@@ -69,28 +71,29 @@ if __name__ == '__main__':
     x1, t1 = main(1)
     x2, t2 = main(0)
 
-    y1 = np.reshape(x1[:,0], (601,))
-    ym1 = np.reshape(x1[:,1], (601,))
-    ar_cap1 = np.reshape(x1[:,2], (601,))
-    ay_cap1 = np.reshape(x1[:,3], (601,))
+    y1 = np.reshape(x1[:, 0], (601,))
+    ym1 = np.reshape(x1[:, 1], (601,))
+    ar_hat1 = np.reshape(x1[:, 2], (601,))
+    ay_hat1 = np.reshape(x1[:, 3], (601,))
     ar_ideal1 = (4/3)*np.ones((601,))
     ay_ideal1 = -(5/3)*np.ones((601,))
 
-    y2 = np.reshape(x2[:,0], (601,))
-    ym2 = np.reshape(x2[:,1], (601,))
-    ar_cap2 = np.reshape(x2[:,2], (601,))
-    ay_cap2 = np.reshape(x2[:,3], (601,))
-    ar_ideal2 = (4/3)*np.ones((601,))
-    ay_ideal2 = -(5/3)*np.ones((601,))
+    y2 = np.reshape(x2[:, 0], (601,))
+    ym2 = np.reshape(x2[:, 1], (601,))
+    ar_hat2 = np.reshape(x2[:, 2], (601,))
+    ay_hat2 = np.reshape(x2[:, 3], (601,))
+    # ar, ay ideal are not being used?
+    #ar_ideal2 = (4/3)*np.ones((601,))
+    #ay_ideal2 = -(5/3)*np.ones((601,))
 
-# Plotting section
+    # Plotting section
     plt.subplot(211)
-    plt.plot(t1 , y1, 'r', t1, ym1, 'k', t2, y2, 'b', t2, ym2, 'g')
+    plt.plot(t1, y1, 'r', t1, ym1, 'k', t2, y2, 'b', t2, ym2, 'g')
     plt.ylabel('tracking performance')
     plt.grid()
 
     plt.subplot(212)
-    plt.plot(t1, ar_cap1, 'b', t1, ay_cap1, 'k', t1, ar_ideal1, t1, ay_ideal1)
+    plt.plot(t1, ar_hat1, 'b', t1, ay_hat1, 'k', t1, ar_ideal1, t1, ay_ideal1)
     plt.ylabel('parameter estimation')
     plt.grid()
 
